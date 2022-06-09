@@ -1,26 +1,59 @@
 const { Router } = require('express');
 const router = Router();
 const { Pokemon } = require('../db')
-const { getPokemonByName, getAllPokemons, getPokemonById } = require('../controllers/pokemons.js')
-
+const { getAllPokemonsByApi, getAllPokemonsByDb, getPokemonByUrl} = require('../controllers/pokemonsPromise.js')
 
 router.get("/", async (req, res) => {
-    const { name } = req.query
-    const byName = await getPokemonByName(name)
-    res.send(byName)
+    let { name } = req.query
+    let allPokemons = []
+    
+    try { 
+        if(!name) {
 
+        const pkByApi = await getAllPokemonsByApi()
+        const pkBd = await getAllPokemonsByDb()
+        const allpk = pkByApi.flat().map(p => allPokemons.push(getPokemonByUrl(p.url)))
+        const pokemonApi = await Promise.all(allPokemons)
+        const byName = pokemonApi.concat(pkBd)
+        return res.status(200).json(byName)
+    }
+    else {
+        const pkByApi = await getAllPokemonsByApi()
+        const pkBd = await getAllPokemonsByDb()
+        const allpk = pkByApi.flat().map(p => allPokemons.push(getPokemonByUrl(p.url)))
+        const pokemonApi = await Promise.all(allPokemons)
+        const done = pokemonApi.concat(pkBd)
+        const all = done.filter(poke => poke.name == name)
 
-})
-
-router.get("/:id", async (req, res) => {
-    const { id } = req.params
-    console.log(id)
+        return res.status(200).json(all)
+    }
+}
+ 
+    catch(error) {
+        console.log(error)
+        res.send({msg: "Error"})
+    }
     
 })
 
+router.get("/:id", async (req, res) => {
+    let allPokemons = []
+    let { id } = req.params
+
+    const pkByApi = await getAllPokemonsByApi()
+        const pkBd = await getAllPokemonsByDb()
+        const allpk = pkByApi.flat().map(p => allPokemons.push(getPokemonByUrl(p.url)))
+        const pokemonApi = await Promise.all(allPokemons)
+        const done = pokemonApi.concat(pkBd)
+        const byId = done.filter(poke => poke.id == id)
+
+        return res.status(200).json(byId)
+})
+
+
 
 router.post("/", async (req, res) => {
-    const {name, life, attack, defense, speed, height, weight } = req.body
+    const {name, life, attack, defense, speed, height, weight, image } = req.body
         
     try {
         const newPokemon = await Pokemon.create({
@@ -30,14 +63,15 @@ router.post("/", async (req, res) => {
             defense, 
             speed, 
             height, 
-            weight
+            weight,
+            image
         });
         res.json(newPokemon)
     }
         
     catch(error){
             console.log(error),
-            res.send(error)
+            res.send({msg: "Error"})
     }
 })
 

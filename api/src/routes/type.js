@@ -6,7 +6,6 @@ const { getAllTypes } = require('../controllers/types.js')
 
 router.get('/types', async (req, res) => {
     const types = await getAllTypes()
-    console.log("este es el type", types[0])
     try {
         await types.map(types => Type.findOrCreate({
         where: {
