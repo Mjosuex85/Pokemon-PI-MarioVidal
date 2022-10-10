@@ -24,12 +24,12 @@ const getAllPokemonsByApi = async () => {
         let arrPok = []
         let pokemons1 = await axios.get(`https://pokeapi.co/api/v2/pokemon`)
         let pokemons2 = await axios.get(pokemons1.data.next)
-        let concatPokemons = pokemons1.data.results.concat(pokemons2.data.results)
+        let concatPokemons = pokemons2.data.results.concat(pokemons1.data.results)
         let UrlPokemons = await concatPokemons.map(pokemon => arrPok.push(getPokemonByUrl(pokemon.url))) 
         let finalsPokemons = Promise.all(arrPok)
         
         return finalsPokemons
-    }
+    }   
 
     catch(error) {
         console.log(error)
@@ -37,13 +37,12 @@ const getAllPokemonsByApi = async () => {
     }
 }
 
-
 const getAllPokemons = async () => {
     try{
         const pokemonsByApi = await getAllPokemonsByApi()
         const pokemonsByBd = await Pokemon.findAll({
             include: {
-                model: Type, through: {attributes: []}
+                model: Type, through: { attributes: [] }
             }
         })
         const allPokemons = pokemonsByApi.concat(pokemonsByBd)

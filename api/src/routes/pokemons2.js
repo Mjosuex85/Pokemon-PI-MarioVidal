@@ -12,7 +12,6 @@ router.get("/", async (req, res) => {
         const pokemonsByName = pokemons.filter(pokemon => pokemon.name == name.toLocaleLowerCase())
         pokemonsByName.length ? res.status(200).send(pokemonsByName)
         : res.status(404).send({msg: "The pokemon doesn't exist"}) 
-        
     }
     else {
         res.status(200).send(await getAllPokemons())
@@ -24,7 +23,6 @@ router.get("/:id", async (req, res) => {
     const pokemons = await getAllPokemons()
     const returnId = pokemons.filter(pokemon => pokemon.id == id)
     returnId.length ? res.send(returnId) : res.send({msg: "We cannot find your ID, try another"})
-    
 })
 
 router.post("/", async (req, res) => {
@@ -42,6 +40,7 @@ router.post("/", async (req, res) => {
             image
         });
         newPokemon.name = name.toLocaleLowerCase()
+        console.log(" LA DATA",newPokemon)
         await newPokemon.save()
         res.json(newPokemon)
     }

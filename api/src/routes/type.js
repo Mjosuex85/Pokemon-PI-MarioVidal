@@ -9,12 +9,12 @@ router.get('/types', async (req, res) => {
     try {
         await types.map(types => Type.findOrCreate({
         where: {
-            type: types
+            type: types,
         }
     }) )
 
-    const allTypes = await Type.findAll()
-    return res.status(200).send(allTypes)
+    const allTGenres = await Type.findAll()
+    return res.status(200).send(allTGenres)
 }
     
     catch(error) {
