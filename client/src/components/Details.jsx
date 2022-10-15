@@ -16,9 +16,9 @@ export default  function Details(props) {
 
   return (
     <> 
-        {details.map(details => {
+        {details.map((details, index) => {
          return (
-         <div> 
+         <div key={index}> 
               <Link to='/home'> <button>Go back</button></Link>
               <h1>{details.name.toUpperCase()}</h1> 
               <h1>Id: {details.id}#</h1>

@@ -24,7 +24,10 @@ const getAllPokemonsByApi = async () => {
         let arrPok = []
         let pokemons1 = await axios.get(`https://pokeapi.co/api/v2/pokemon`)
         let pokemons2 = await axios.get(pokemons1.data.next)
-        let concatPokemons = pokemons2.data.results.concat(pokemons1.data.results)
+        let pokemons3 = await axios.get(pokemons2.data.next)
+        let pokemons4 = await axios.get(pokemons3.data.next)
+        let pokemons5 = await axios.get(pokemons4.data.next)
+        let concatPokemons = pokemons2.data.results.concat(pokemons1.data.results).concat(pokemons3.data.results).concat(pokemons4.data.results).concat(pokemons5.data.results)
         let UrlPokemons = await concatPokemons.map(pokemon => arrPok.push(getPokemonByUrl(pokemon.url))) 
         let finalsPokemons = Promise.all(arrPok)
         

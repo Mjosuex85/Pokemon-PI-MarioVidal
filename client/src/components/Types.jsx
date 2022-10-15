@@ -19,10 +19,10 @@ export default function Types(props) {
 return (
     <div>
         este es el type exportado
-        {props.type.map(t => {
-            return <div>    
+        {props.type.map((type, index) => {
+            return <div key={index}>    
                         <ul>
-                        <li> {t} </li>
+                        <li> {type} </li>
                         </ul> 
                    </div>
         })} 

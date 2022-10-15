@@ -1,18 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import style from '../styles/card.module.css'
 
 export default function PokemonsCard(props) {
   return (
     
-      <Link to={`/details/${props.id}`}>
-    <div>
-       <h3>{props.name.toUpperCase()}</h3>
-      <img src={props.image} alt="Img Not Found" width="300" height="300"/>
-      <div>
-      {props.type?.map(type => <h4> {type} </h4>)}
-      </div>
-     
+  <Link to={`/details/${props.id}`} style={{textDecoration: 'none', color: 'white'}}>
+    <div className={style.containter_box}>
+       <h4 className={style.title}>{props.name.toUpperCase()} </h4>
+          <img className={style.image} src={props.image} alt="Img Not Found" width="280" height="280"/>
+        <div className={style.types}>
+          {props.type?.map((type, index) => <h4 key={index}> {type.toUpperCase()} </h4>)}
+        </div>
     </div>
-     </Link>
+  </Link>
   )
 }

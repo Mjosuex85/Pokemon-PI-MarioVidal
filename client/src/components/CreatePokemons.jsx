@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Types from './Types.jsx'
+/* import Types from './Types.jsx' */
 
 export default function CreatePokemons() {
   const details = useSelector((state) => state.types)
@@ -71,14 +71,14 @@ export default function CreatePokemons() {
 
             <label htmlFor=''> Types </label>
                 <select onChange={onInputChange2} value={typesForm} > 
-                  {details.map(t => {
-                   return <option>{t.type}</option>
+                  {details.map((t, index)=> {
+                   return <option key={index}>{t.type}</option>
                   })}
                 </select> <br></br><br></br>
             
             {/* <Types type={typesForm}/> */}
-            {typesForm.map(t => {
-              return <div>
+            {typesForm.map((t, index) => {
+              return <div key={index}>
                       <ul> <li>{t}</li> </ul>
                       </div>
             })}

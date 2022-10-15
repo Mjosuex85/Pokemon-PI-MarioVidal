@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect /* useState  */} from 'react'
 import SearchBar from './SearchBar.jsx'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -35,7 +35,6 @@ export default function Nav() {
 
   
   return (
-
     <div>
         <Link to='/create'><button>Create your own Pokemon</button></Link>
         
@@ -58,8 +57,8 @@ export default function Nav() {
 
         <select onChange={(e) => filterType(e)}>
           <option enable>Order By type...</option>
-          {allTypes.map(types => {
-            return <option value={types.type.toLocaleUpperCase()}>{types.type.toLocaleUpperCase()}</option>
+          {allTypes.map((types, index) => {
+            return <option key={index} value={types.type.toLocaleUpperCase()}>{types.type.toLocaleUpperCase()}</option>
           })}
         </select>
         

@@ -17,7 +17,7 @@ let TypesRoute = `http://localhost:3001/types`
 
 
 export function getPokemons() {
-    return async function(dispatch) {
+    return function(dispatch) {
         try { return axios.get(PokemonsRoute)
                .then((pokemons) => {
                 return dispatch({

@@ -1,0 +1,10 @@
+.card__containter{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 5rem;
+}
+
+/* .card__containter:hover {
+    transform: scale(1.1);
+} */
